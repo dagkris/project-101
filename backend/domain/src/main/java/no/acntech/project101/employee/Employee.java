@@ -43,6 +43,17 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
+
+    public Employee(String firstName, String lastName, LocalDate dateOfBirth, Company company) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.company = company;
+    }
+
+
+
+
     public Long getId() {
         return id;
     }

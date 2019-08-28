@@ -59,6 +59,13 @@ class EmployeeResourceTest {
     @Test
     void findById() throws Exception {
         //TODO: implement
+        final Employee pantAlt = new Employee("pantAlt", "alltid", LocalDate.of(2019, 8, 28), new Company("accenture", "123456789"));
+        when(employeeService.findById(1L)).thenReturn(Optional.of(pantAlt));
+        mockMvc.perform(MockMvcRequestBuilders
+        .get("/employees/{id}", 1L)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andReturn();
     }
 
     @Test
@@ -81,6 +88,10 @@ class EmployeeResourceTest {
     @Test
     void deleteEmployee() throws Exception {
         //TODO: implement
+        final Employee pantAlt = new Employee("pantAlt", "alltid", LocalDate.of(2019, 8, 28), new Company("accenture", "123456789"));
+        when(employeeService.findById(1L)).thenReturn(Optional.of(pantAlt));
+
+
     }
 
     @Test

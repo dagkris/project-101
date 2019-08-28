@@ -1,7 +1,9 @@
 package no.acntech.project101.employee.service;
 
+import antlr.debug.SemanticPredicateAdapter;
 import no.acntech.project101.employee.Employee;
 import no.acntech.project101.employee.repository.EmployeeRepository;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +30,15 @@ class EmployeeServiceTest {
     @Test
     void save() {
         //TODO: implement
+        final Employee employee = new Employee("Dag", "Kristiansen", LocalDate.of(1195,6,15));
+        when(employeeRepository.save(employee)).thenReturn(employee);
+
+        final Employee savedEmployee = employeeService.save(employee);
+
+        assertThat(savedEmployee.getFirstName()).isEqualTo(employee.getFirstName());
+        assertThat(savedEmployee.getLastName()).isEqualTo(employee.getLastName());
+        assertThat(savedEmployee.getDateOfBirth()).isEqualTo(employee.getDateOfBirth());
+
     }
 
     @Test
@@ -46,11 +57,24 @@ class EmployeeServiceTest {
     @Test
     void findAll() {
         //TODO: implement
+        final Employee pantAlt = new Employee("pantAlt", "alltid", LocalDate.of(2019, 8,28));
+        final Employee alltid = new Employee("alltid", "pantAlt", LocalDate.of(2019, 8,28));
+        when(employeeRepository.findAll()).thenReturn(Arrays.asList(pantAlt, alltid));
+
+        List<Employee> employees = employeeService.findAll();
+
+        assertThat(employees).hasSize(2);
+        assertThat(employees).contains(pantAlt, alltid);
     }
 
     @Test
     void deleteExisting() {
         //TODO: implement
+        when(employeeRepository.existsById(1L)).thenReturn(true);
+
+        employeeService.delete(1L);
+
+        verify(employeeRepository).deleteById(1L);
     }
 
     @Test
